@@ -1,0 +1,10 @@
+ Todo
+======
+
+ * Host setup guide
+ * Shell scripts
+ * uidmap'ed shell
+ * Github pages/wiki
+ * Proper markdown formating/HTML
+
+much more...
