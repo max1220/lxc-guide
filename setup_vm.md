@@ -36,7 +36,7 @@ New VM
  * Access using:
      "lxc-attach -n $VMNAME"
  * Temporarily setup nameserver:
-     "echo 8.8.8.8 > /etc/resolv.conf"
+     "echo nameserver 8.8.8.8 > /etc/resolv.conf"
  * Install basic packages:
      "apt-get update"
      "apt-get install -y nano iputils-ping bash-completion screen openssh-server resolvconf"

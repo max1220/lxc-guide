@@ -11,3 +11,8 @@ worked for me, even though I think my setup is not that unusual.
  * Setting up a VM
  * Notes
  * Bugs
+
+## Notes
+
+The Markdown formatting is not done yet, if you view this on github you'll have
+a better expirience using the raw-version.
