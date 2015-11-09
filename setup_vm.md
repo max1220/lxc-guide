@@ -2,12 +2,11 @@ $VMIP = Desired IP of VM
 $ROOTFS = Inside the rootfs of the VM
   To access files in your rootfs from your unpriviledged user, you need a uidmap'ed shell.
   Read: https://s3hh.wordpress.com/2013/03/07/experimenting-with-user-namespaces/
+  You could also just modify the files as root.
 $VMNAME = Name of VM
 $GATEWAY = Gateway IP(192.168.100.1)
 $NAMESERVERS = Nameservers, seperated by " "
-  You can get this using: "echo $(cat /etc/resolv.conf | grep "nameserver" | tr "\n" " ")"
-$NAMESERVER = Single nameserver
-  Just take one of the command from above; this is overwritten automaticly later
+  You can get this using: "cat /etc/resolv.conf | grep "nameserver"
 
 New VM
  * "lxc-create -t download -n $VMNAME"
@@ -27,7 +26,6 @@ New VM
      "  address $VMIP"
      "  netmask 255.255.255.0"
      "  gateway $GATEWAY"
-     "  dns-nameservers $NAMESERVERS"
  * $ROOTFS/etc/apt/sources.list:
      "deb http://ftp.de.debian.org/debian jessie main contrib non-free"
      "deb http://security.debian.org/ jessie/updates main contrib non-free"
@@ -35,11 +33,12 @@ New VM
      "lxc-start -n $VMNAME -d"
  * Access using:
      "lxc-attach -n $VMNAME"
- * Temporarily setup nameserver:
-     "echo nameserver 8.8.8.8 > /etc/resolv.conf"
+ * Setup resolv.conf:
+     "echo $NAMESERVERS > /etc/resolv.conf"
+	 You can temporarily use "echo nameserver 8.8.8.8 > /etc/resolv.vonf"
  * Install basic packages:
      "apt-get update"
-     "apt-get install -y nano iputils-ping bash-completion screen openssh-server resolvconf"
+     "apt-get install -y nano iputils-ping bash-completion screen openssh-server wget unzip"
      "dpkg-reconfigure locales"
      (Select whatever locales you want)
  * Configure sshd: "nano /etc/ssh/sshd_config"
@@ -53,9 +52,7 @@ New VM
      (Paste your public key(s) in here)
      "chmod 600 /root/.ssh/authorized_keys"
      (Using ~ instead of /root won't work, since lxc-attach doesn't set the home path correctly)
- * Unlock root account or set password:
-     "usermod --unlock root"
-     or
+ * Set root password to unlock root login:
      "passwd"
  * Exit container:
      "exit"
