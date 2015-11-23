@@ -2,7 +2,9 @@ $VMIP = Desired IP of VM
 $ROOTFS = Inside the rootfs of the VM
   To access files in your rootfs from your unpriviledged user, you need a uidmap'ed shell.
   Read: https://s3hh.wordpress.com/2013/03/07/experimenting-with-user-namespaces/
+  In most cases: "lxc-usernsexec -- /bin/bash"
   You could also just modify the files as root.
+  In both cases, remember to set owner etc. correct again!
 $VMNAME = Name of VM
 $GATEWAY = Gateway IP(192.168.100.1)
 $NAMESERVERS = Nameservers, seperated by " "
