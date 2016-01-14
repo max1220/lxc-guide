@@ -28,6 +28,16 @@
     make
     sudo make install
     
+    # Unfortionally, make install does not copy cgmanager to /sbin/cgmanager, but the systemd script it installs points there
+    # Change the line "ExecStart=/sbin/cgmanager -m name=systemd" to "ExecStart=/usr/local/sbin/cgmanager -m name=systemd"
+    sudo nano /usr/local/lib/systemd/system/cgmanager.service
+    
+    sudo systemctl enable cgmanager
+    sudo systemctl start cgmanager
+    
+    
+    sudo cgm create all $USER
+    
     ```
     
  * Config:
