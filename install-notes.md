@@ -3,7 +3,8 @@
 
 
  * on debian you most likely want to install the  git version:
- 
+
+    ```bash
     sudo apt-get install libgnutls28-dev libcap-dev # To get https and cap drop support
     # Additional dependencys for Lua: liblua5.1-0-dev
     git clone https://github.com/lxc/lxc
@@ -14,8 +15,11 @@
     
     make
     sudo make install
+    ```
     
  * Config:
+
+    ```bash
     mkdir -p ~/.local/share/lxc
     chmod +x ~/.local/share/lxc
     mkdir -p ~/.config/lxc
@@ -52,3 +56,5 @@
     
     # See lxc.log for any fails.
     # Proceed with normal procedure
+   ```
+   
