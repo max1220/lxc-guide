@@ -15,6 +15,19 @@
     
     make
     sudo make install
+    
+    
+    
+    # now we need to install cgmanager
+    cd ..
+    sudo apt-get install libpam0g-dev libdbus-1-dev libnih-dev libnih-dbus-dev
+    git clone https://github.com/lxc/cgmanager
+    cd cgmanager
+    ./bootstrap.sh
+    ./configure
+    make
+    sudo make install
+    
     ```
     
  * Config:
@@ -50,9 +63,24 @@
     # Allow unprivileged_userns_clone(Needed by LXC)
     sudo sysctl kernel.unprivileged_userns_clone=1
     
+    # make that persistent
+    echo -e "\n\n\n kernel.unprivileged_userns_clone = 1" | sudo tee -a /etc/sysctl.conf
+    
+    
+    # you now need to configure networking. I'd recommend reading https://wiki.debian.org/LXC/SimpleBridge
+    # A NATed setup is recommended if you have a machine on a network not your own
+    # (Without the DHCP Server belonging to you)
+    # On most desktop systems you have network manager installed, so I'd recommend using that to create
+    # the bridge. (Try using nmtui if the GUI tools annoy you)
+    
+    
     
     # Create test container
-    lxc-create -l DEBUG -o lxc.log --name vm-test0 -t download -- -d debian -r jessie -a amd64
+    lxc-create -l DEBUG -o lxc.log -n vm-test0 -t download -- -d debian -r jessie -a amd64
+    
+    # Start test container
+    lxc-start -l DEBUG -o lxc.log -n vm-test0 -t download -- -d debian -r jessie -a amd64
+    
     
     # See lxc.log for any fails.
     # Proceed with normal procedure
